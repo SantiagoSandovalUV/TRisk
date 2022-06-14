@@ -1,47 +1,36 @@
 <!DOCTYPE html>
 <html>
-
 <head>
 	<meta charset="utf-8">
-	<title>sinusoidal </title>
+	<title>Laboratorio de tension - Universidad del Valle - Reider Muñoz</title>
 	<style>
 		body {
 			margin: 0;
 		}
-
 		canvas {
 			width: 100%;
 			height: 100%
 		}
 	</style>
 </head>
-
 <body>
 	<script src="https://cdn.jsdelivr.net/npm/three@0.136.0/build/three.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/three@0.136.0/examples/js/controls/OrbitControls.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/three@0.136.0/examples/js/loaders/GLTFLoader.js"></script>
-
 	<script>
-
 		var scene = new THREE.Scene();
 		var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 		var Mesa1;
-
-
 		const renderer = new THREE.WebGLRenderer();
 		renderer.setSize(window.innerWidth, window.innerHeight);
 		document.body.appendChild(renderer.domElement);
-
 		clock = new THREE.Clock();
-
 		scene = new THREE.Scene();
 		scene.background = new THREE.Color(0xa0a0a0);
 		scene.fog = new THREE.Fog(0xa0a0a0, 10, 50);
-
 		const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444);
 		hemiLight.position.set(0, 20, 0);
 		scene.add(hemiLight);
-
 		const dirLight = new THREE.DirectionalLight(0xffffff);
 		dirLight.position.set(- 3, 10, - 10);
 		dirLight.castShadow = true;
@@ -52,51 +41,60 @@
 		dirLight.shadow.camera.near = 0.1;
 		dirLight.shadow.camera.far = 40;
 		scene.add(dirLight);
-
 		const controls = new THREE.OrbitControls(camera, renderer.domElement);
 		camera.position.set(5, 2, 0); // posicion de la camara (0, 5, 5)
-
 		controls.update();
-
-
 		renderer.render(scene, camera);
-
 		function animate() {
 			requestAnimationFrame(animate);
 			controls.update();
+            var h;
+            h=1;
 			if (Mesa1) {
-
 				if(Mesa1.position.y<=2.9){
 					Mesa1.position.y+=0.1
 				}else{
 					Mesa1.position.y=3.5
-
 					
 				}
 				console.log(Mesa1.position.y)
-
-
 			}
-
 			renderer.render(scene, camera);
 
 		}
 		animate()
-		
+        Mesa1.position.y=3.5
+            function animate2() {
+			requestAnimationFrame(animate);
+			controls.update();
+            if (Mesa1) {
+				if(Mesa1.position.y>=2.9){
+					Mesa1.position.y=Mesa1.position.y-0.1
+				}else{
+					Mesa1.position.y=0
+					
+				}
+				console.log(Mesa1.position.y)
+			}
+		}
+		animate2()
 // Instantiate a loader
-const loader = new THREE.GLTFLoader();
-
+const loader2 = new THREE.GLTFLoader();
 // Load a glTF resource
-loader.load(
-	'maquinaCompletaConmesa.gltf',//'scene.gltf'
+loader2.load(
+	'Mesa1.gltf',//'scene.gltf'
 	function ( gltf ) {
-		scene.add( gltf.scene );
+		Mesa1 = gltf.scene; 
+		scene.add( Mesa1 );
 		gltf.animations; // Array<THREE.AnimationClip>
 		gltf.scene; // THREE.Group
 		gltf.scenes; // Array<THREE.Group>
 		gltf.cameras; // Array<THREE.Camera>
 		gltf.asset; // Object
-
+		console.log('completado!.....')
+		Mesa1.position.z+=1.587
+		Mesa1.position.x+=-0.001
+		Mesa1.position.y+=0.258
 	},
 	// called while loading is progressing
 	function ( xhr ) {
@@ -107,7 +105,27 @@ loader.load(
 		console.log( 'An error happened' );
 	}
 );
+// create an AudioListener and add it to the camera
+const listener = new THREE.AudioListener();
+camera.add( listener );
+// create a global audio source
+const sound = new THREE.Audio( listener );
+// load a sound and set it as the Audio object's buffer
+const audioLoader = new THREE.AudioLoader();
+audioLoader.load( 'sound_ogg.ogg', function( buffer ) {
+	sound.setBuffer( buffer );
+	sound.setLoop( true );
+	sound.setVolume( 0.5 );
+	sound.play();
+});
+		/*
+		var animate = function () {
+			requestAnimationFrame( animate );
+			cube.rotation.x += 0.01;
+			cube.rotation.y += 0.01;
+			renderer.render( scene, camera );
+		};
+		animate(); */
 	</script>
 </body>
-
 </html>
