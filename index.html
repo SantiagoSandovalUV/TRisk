@@ -49,35 +49,26 @@
 			requestAnimationFrame(animate);
 			controls.update();
             var h;
+            var G;
             h=1;
-			if (Mesa1) {
+            G=0
+            if (Mesa1) {
+                h=h+1;
+                // Mesa1.position.y=-1.5*(-1)^h;
+               
 				if(Mesa1.position.y<=2.9){
-					Mesa1.position.y+=0.1
+					Mesa1.position.y+=Math.sin(h)
 				}else{
-					Mesa1.position.y=3.5
+				 	Mesa1.position.y=3.5
 					
 				}
-				console.log(Mesa1.position.y)
+				 console.log(Mesa1.position.y)
 			}
-			renderer.render(scene, camera);
+            renderer.render(scene, camera);
 
 		}
 		animate()
-        Mesa1.position.y=3.5
-            function animate2() {
-			requestAnimationFrame(animate);
-			controls.update();
-            if (Mesa1) {
-				if(Mesa1.position.y>=2.9){
-					Mesa1.position.y=Mesa1.position.y-0.1
-				}else{
-					Mesa1.position.y=0
-					
-				}
-				console.log(Mesa1.position.y)
-			}
-		}
-		animate2()
+       
 // Instantiate a loader
 const loader2 = new THREE.GLTFLoader();
 // Load a glTF resource
