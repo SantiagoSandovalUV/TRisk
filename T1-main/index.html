@@ -146,7 +146,7 @@
 		<div class="card" style="width: 100%;">
 			<div class="card-body">
 				<div style="text-align: center;">
-					<button type="button" onclick="	exportCSVFile(headers,data,'nombres')" class="btn btn-primary">Exportar
+					<button type="button" onclick="	exportCSVFile(headers,data,'Aceleración_Data')" class="btn btn-primary">Exportar
 						datos</button>
 				</div>
 			</div>
@@ -220,6 +220,9 @@
 			var Relativa = JSON.parse(
 				JSON.stringify(u2)
 			)
+			var Total = JSON.parse(
+				JSON.stringify(suma_w)
+			)
 			var data=[]
 			// // Variables necesarias para resolver el método númerico
 			// var u0=0; var up0=0; var p0=0; //Condiciones inciales
@@ -273,7 +276,13 @@
 				clearInterval(tiempo1)
 				clearInterval(tiempo2)
 				clearInterval(tiempo3)
-
+				Relativa = JSON.parse(
+							JSON.stringify(u2)
+						);
+						Total = JSON.parse(
+							JSON.stringify(suma_w)
+						);
+				organizador()
 			}
 			function contador() {
 				var contador1 = 0;
@@ -337,6 +346,9 @@
 						clearInterval(tiempo2);
 						Relativa = JSON.parse(
 							JSON.stringify(u2)
+						)
+						Total = JSON.parse(
+							JSON.stringify(suma_w)
 						)
 						organizador()
 					}
@@ -866,6 +878,7 @@
 					console.log('An error happened');
 				}
 			);
+			//Exportar Datos a excel
 			function convertToCSV(objArray) {
 				var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
 				var str = '';
@@ -919,8 +932,17 @@
 				id: 'Identificador',
 				nombre: 'Nombre'
 			};
+			// function organizador() {
+			// 	data = [{ id: 'Relative Aceleration',Relativa },
+			// 	{id: 'Total Aceleration',Total}
+			// 	];
+			// 	return data
+			// } ////Arreglar
 			function organizador() {
-				data = [{ Relativa }
+				data = [{id :'Relativa' },
+					{Relativa },
+					{id :'Total' },
+				{Total}
 				];
 				return data
 			}
