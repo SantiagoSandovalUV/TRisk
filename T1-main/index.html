@@ -26,14 +26,14 @@
 		}
 
 		canvas {
-			width: 100%;
-			height: 100%
+			width: auto;
+			height: auto;
 		}
 
 		#ventana {
 			background-color: #ffffff;
-			width: 400px;
-			height: 200px;
+			width: auto;
+			height: auto;
 			position: absolute;
 			top: 0;
 			left: 0;
@@ -41,7 +41,7 @@
 
 		#header {
 			margin: auto;
-			width: 500px;
+			width: auto;
 			font-family: Arial, Arial, Helvetica, sans-serif
 		}
 	</style>
@@ -146,7 +146,8 @@
 		<div class="card" style="width: 100%;">
 			<div class="card-body">
 				<div style="text-align: center;">
-					<button type="button" onclick="	exportCSVFile(headers,data,'Aceleración_Data')" class="btn btn-primary">Exportar
+					<button type="button" onclick="	exportCSVFile(headers,data,'Aceleración_Data')"
+						class="btn btn-primary">Exportar
 						datos</button>
 				</div>
 			</div>
@@ -202,9 +203,11 @@
 			var p = []; var p1 = [];
 			var u = []; var up = []; var upp = []; var P = []; var u2 = []; var up2 = []; var upp2 = [];
 			var dt = 0;
+			var suma_w = [0];
 			u2[0] = 0;
 			up2[0] = 0;
 			upp2[0] = 0;
+			var t1=0;
 			var tiempo1;
 			var tiempo2;
 			var tiempo3;
@@ -216,14 +219,13 @@
 			var Cilindro1 = Cilindro();
 			Barra11 = Barra1(); ////Barra_Blanca_Off
 			var contadorglobal = 0;
-			var suma_w = []
 			var Relativa = JSON.parse(
 				JSON.stringify(u2)
-			)
+			);
 			var Total = JSON.parse(
 				JSON.stringify(suma_w)
-			)
-			var data=[]
+			);
+			var data = [];
 			// // Variables necesarias para resolver el método númerico
 			// var u0=0; var up0=0; var p0=0; //Condiciones inciales
 			// var k=10; var c=0.1592;// Masa, Rigidez, Amortiguamiento
@@ -277,11 +279,11 @@
 				clearInterval(tiempo2)
 				clearInterval(tiempo3)
 				Relativa = JSON.parse(
-							JSON.stringify(u2)
-						);
-						Total = JSON.parse(
-							JSON.stringify(suma_w)
-						);
+					JSON.stringify(u2)
+				);
+				Total = JSON.parse(
+					JSON.stringify(suma_w)
+				);
 				organizador()
 			}
 			function contador() {
@@ -304,6 +306,7 @@
 					contador1++;
 					Vtiempo2[contador1] = t;
 					t = t + dt;
+					t1 = t1 + dt;
 					//console.log(Vtiempo);
 					//console.log(Mesa1.position.y);
 					renderer.render(scene, camera);
@@ -330,10 +333,10 @@
 					esfera2.position.x = u2[contador1] + Seno[contador1] + 5;
 					//Mover la caja
 					let pos = { x: 5, y: 0.2, z: 0 };
-					Cube1gdl.position.x = pos.x + u2[contador1] + Seno[contador1];
+					cube.position.x = pos.x+ Seno[contador1];
 					//Mover cilindro
 					Cilindro1.position.x = 4 + u2[contador1] + Seno[contador1];
-					suma_w[contadorglobal] = (u2[contadorglobal] + Seno[contadorglobal])
+					suma_w[contadorglobal+1] = (u2[contadorglobal+1] + Seno[contadorglobal+1])
 					// CambiarAltura();
 					//    esfera1.position.z=u2[contador1]+Seno[contador1];
 					chart.data.datasets[0].data.push({ y: u2[contador1], x: t })
@@ -364,16 +367,16 @@
 				scene.add(light); //Ligth Add
 			}
 			// Cargar Cubo
-			const color = 0xFFFFFF;
-			let pos = { x: 5, y: 0.2, z: 0 }
-			const geometry = new THREE.BoxGeometry(0.2, 2, 0.2, 50, 50, 50); //Geomtria del cubo, en el espacio
+			// const color = 0xFFFFFF;
+			let pos = { x: 5, y: 0.4, z: 0 }
+			const geometry = new THREE.BoxGeometry(0.2, 2, 0.2, 100, 100, 100); //Geomtria del cubo, en el espacio
 			const loader8 = new THREE.TextureLoader(); //Texture loader, cargador de textura sonaba paila
 			// const texture = loader8.load('https://threejs.org/manual/examples/resources/images/star.png');
-			// const texture = loader8.load('https://threejs.org/manual/examples/resources/images/wall.jpg')
+			const texture = loader8.load('https://threejs.org/manual/examples/resources/images/wall.jpg')
 			// const material = new THREE.MeshPhongMaterial({ color, map: texture }); //Crea el material, apartir del color y la textura
 			// geometry.morphAttributes.position = []
 			const material = new THREE.MeshBasicMaterial({
-				color: 0xf29a48, //Color del cubo
+				// color: 0xf29a48, //Color del cubo
 				wireframe: true, //Mostrar los segmentos con hilos
 
 			});
@@ -452,13 +455,15 @@
 					// geometry.attributes.position.setZ(s, position_clone[s] / 2 + xflex*xcos);
 					// geometry.attributes.position.setZ(s, position_clone[s] / 4 + xflex * xcos);//Mejorcita
 					// geometry.attributes.position.setZ(s, zeta[s] + xflex * xcos*Po * Math.sin(Wn * t));//Mejorcita1
-					geometry.attributes.position.setZ(s, zeta[s] + xflex * (u2[contadorglobal]) * -1);//SuperBien
-					// geometry.attributes.position.setZ(s, zeta[s] + xflex *(suma_w[contadorglobal]/1000)*-1);//TryOne
-					t = t + dt;
+					// geometry.attributes.position.setZ(s, zeta[s] + xflex * (u2[contadorglobal]) * -1);//SuperBien
+					geometry.attributes.position.setZ(s, zeta[s] + xflex * (u2[contadorglobal]+Po * Math.sin(Wn * t1)*(0.5/k)) * -1);//SuperBien
+					// geometry.attributes.position.setZ(s, zeta[s] + xflex * (suma_w[contadorglobal]) * -1);//TryOne
+					// geometry.attributes.position.setZ(s, zeta[s] + xflex * (prueba[contadorglobal]) * -1);//TryOne
+
 					// geometry.attributes.position.setZ(s+1, 100)
 					// geometry.attributes.position.setZ(i, position_clone.getZ(i)+xsin);
 				}
-				// geometry.computeVertexNormals();
+				// // geometry.computeVertexNormals();
 				geometry.attributes.position.needsUpdate = true;
 				renderer.render(scene, camera)
 				requestAnimationFrame(Movimiento_Sen)
@@ -656,6 +661,8 @@
 							type: 'linear',
 							max: Po + Po / (10 * Po),
 							min: -Po - Po / (10 * Po),
+							// max: 2,
+							// min: -2,
 							title: {
 								display: true,
 								text: 'u[m]'
@@ -939,10 +946,10 @@
 			// 	return data
 			// } ////Arreglar
 			function organizador() {
-				data = [{id :'Relativa' },
-					{Relativa },
-					{id :'Total' },
-				{Total}
+				data = [{ id: 'Relativa' },
+				{ Relativa },
+				{ id: 'Total' },
+				{ Total }
 				];
 				return data
 			}
