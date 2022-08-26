@@ -18,7 +18,7 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js"
 		integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT"
 		crossorigin="anonymous"></script>
-
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
 	<style>
 		body {
@@ -86,7 +86,7 @@
 		</div>
 		<div class="card mt-2" style="width: 100%;">
 			<div class="btn-group">
-				<button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown"
+				<!-- <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown"
 					aria-expanded="false">
 					Tipos de Carga
 				</button>
@@ -94,7 +94,9 @@
 					<li><a class="dropdown-item" href="#">Sinusoidal</a></li>
 					<li><a class="dropdown-item" href="#">Barrido</a></li>
 					<li><a class="dropdown-item" href="#">Carga impulsiva</a></li>
-				</ul>
+				</ul> -->
+				<input type="file" onclick="  SeleccionarDatos(),CargarExcel()" class="btn btn-danger" id="Cargar"
+					accept=".xls,.xlsx">
 			</div>
 		</div>
 		<div class="card mt-2" style="width: 100%;">
@@ -108,7 +110,7 @@
 							placeholder="">
 					</div>
 					<div class="col-auto" style="width:180px">
-						<label class="form-label" style="font-size: 14px">Frecuencia angular Wn <i
+						<label class="form-label" style="font-size: 14px">Frecuencia angular W <i
 								data-tippy-content="El módulo de elasticidad es la pendiente del diagrama esfuerzo-deformación unitaria en la región linealmente elástica; esfuerzo/deformación"
 								class="ti ti-question-mark text-primary"></i></label>
 						<input type="text" class="form-control form-control-sm" name="Wn_box" id="Wn_box"
@@ -147,8 +149,12 @@
 			<div class="card-body">
 				<div style="text-align: center;">
 					<button type="button" onclick="	exportCSVFile(headers,data,'Aceleración_Data')"
-						class="btn btn-primary">Exportar
+						class="btn btn-success">Exportar
 						datos</button>
+					<button type="button" onclick="	recargar()" class="btn btn-secondary">Limpiar
+						campos</button>
+					<!-- <input type="file"/><button onclick=" CargarExcel()" class="btn btn-primary" id="Cargar"
+						accept=".xls,xlsx">Cargar</button> -->
 				</div>
 			</div>
 		</div>
@@ -207,7 +213,7 @@
 			u2[0] = 0;
 			up2[0] = 0;
 			upp2[0] = 0;
-			var t1=0;
+			var t1 = 0;
 			var tiempo1;
 			var tiempo2;
 			var tiempo3;
@@ -333,10 +339,10 @@
 					esfera2.position.x = u2[contador1] + Seno[contador1] + 5;
 					//Mover la caja
 					let pos = { x: 5, y: 0.2, z: 0 };
-					cube.position.x = pos.x+ Seno[contador1];
+					cube.position.x = pos.x + Seno[contador1];
 					//Mover cilindro
 					Cilindro1.position.x = 4 + u2[contador1] + Seno[contador1];
-					suma_w[contadorglobal+1] = (u2[contadorglobal+1] + Seno[contadorglobal+1])
+					suma_w[contadorglobal] = (u2[contadorglobal] + Seno[contadorglobal])
 					// CambiarAltura();
 					//    esfera1.position.z=u2[contador1]+Seno[contador1];
 					chart.data.datasets[0].data.push({ y: u2[contador1], x: t })
@@ -445,7 +451,7 @@
 					const x = geometry.attributes.position.getY(i);
 					const xsin = 0.6 * Math.sin(2 * x / 3 + 1 / 2 * now);
 					// const xflex = (x * x) / 4 - (x * x * x) / 12;
-					const xflex = (x * x) / 1 - (x * x * x) / 3;
+					const xflex = (x * x) / 1.5 - (x * x * x) / 3;
 					const xcos = -1 * Math.cos(now * 3 / 8);
 					const xsint = Po * Math.sin(Wn * t);
 					// geometry.attributes.position.setX(i, xcos);
@@ -456,7 +462,7 @@
 					// geometry.attributes.position.setZ(s, position_clone[s] / 4 + xflex * xcos);//Mejorcita
 					// geometry.attributes.position.setZ(s, zeta[s] + xflex * xcos*Po * Math.sin(Wn * t));//Mejorcita1
 					// geometry.attributes.position.setZ(s, zeta[s] + xflex * (u2[contadorglobal]) * -1);//SuperBien
-					geometry.attributes.position.setZ(s, zeta[s] + xflex * (u2[contadorglobal]+Po * Math.sin(Wn * t1)*(0.5/k)) * -1);//SuperBien
+					geometry.attributes.position.setZ(s, zeta[s] + xflex * (u2[contadorglobal] + Po * Math.sin(Wn * t1) * (0.5 / k)) * -1);//SuperBien
 					// geometry.attributes.position.setZ(s, zeta[s] + xflex * (suma_w[contadorglobal]) * -1);//TryOne
 					// geometry.attributes.position.setZ(s, zeta[s] + xflex * (prueba[contadorglobal]) * -1);//TryOne
 
@@ -716,6 +722,7 @@
 					}
 				}
 			}
+			animate()
 			const loader1 = new THREE.GLTFLoader();
 			// Load a glTF resource, Lab loading
 			loader1.load(
@@ -953,7 +960,33 @@
 				];
 				return data
 			}
-			animate()
+			function recargar() {
+				window.location.href = window.location.href;
+			}
+			let selectfile;
+			function SeleccionarDatos() {
+				document.getElementById('Cargar').addEventListener("change", (event) => {
+					selectfile = event.target.files[0];
+				})
+			}
+			let rowObject;
+			function CargarExcel() {
+				document.getElementById('Cargar').addEventListener("change", (event) => {
+					if (selectfile) {
+						let fileReader = new FileReader
+						fileReader.readAsBinaryString(selectfile)
+						fileReader.onload = (event) => {
+							let Excel_data = event.target.result;
+							let woorkBook = XLSX.read(Excel_data, { type: "binary" });
+							woorkBook.SheetNames.forEach(sheet => {
+								rowObject = XLSX.utils.sheet_to_json(woorkBook.Sheets[sheet]);
+								console.log(rowObject)
+							})
+						}
+
+					}
+				})
+			}
 		</script>
 </body>
 
