@@ -151,7 +151,7 @@
       <div class="col-md-3">
         <a href="https://laboratoriosvirtualesuv.github.io/LaboratoriosVirtualesUV/index.html"
           class="d-flex align-items-center text-dark text-decoration-none">
-          <img src="logo.png" style="height: 30px;">
+          <!-- <img src="logo.png" style="height: 30px;"> -->
           <span class="fs-8">VIRTUAL LABORATORIES</span>
         </a>
       </div>
@@ -1031,7 +1031,7 @@
         console.log("Selección:", seleccion);
         // Cerrar el popup después de obtener la selección (opcional)
         // ExportarAnyTiempo();
-        console.log(data1)
+        // console.log(data1)
         exportCSVFile(headers, data1, 'Desp_Data');
         cerrarPopup();
       }
@@ -1172,7 +1172,7 @@
           LogarithmicSweep.checked = false;
           LineaChk = true;
           LogaritChk = false;
-          console.log(LineaChk);
+          // console.log(LineaChk);
 
         } else if (!LogarithmicSweep.checked) {
           LinearSweep.checked = true;
@@ -1183,7 +1183,7 @@
           LinearSweep.checked = false;
           LineaChk = false;
           LogaritChk = true;
-          console.log(LogaritChk);
+          // console.log(LogaritChk);
         } else if (!LinearSweep.checked) {
           LogarithmicSweep.checked = true;
         }
@@ -1334,7 +1334,7 @@
             scene.remove(V3_3P);
             //Condensar y calcular Masasas
             K_c1 = condensar(PrG);
-            console.log(K_c1);
+            // console.log(K_c1);
 
             var [M, K_c] = MKC3D(K_c1[0], K_c1[1], K_c1[2], K_c1[3]);
 
@@ -1408,10 +1408,10 @@
         scene.remove(EjesPiso1);
         scene.remove(EjesPiso2);
         scene.remove(EjesPiso3);
-        console.log(M, K_c, po, uo, upo, dt2, pa, zeta);
+        // console.log(M, K_c, po, uo, upo, dt2, pa, zeta);
         const [q1, qp1, Mne, Cne, Kne, PHI, w, h] = Newmark_Multiples(M, K_c, po, uo, upo, dt2, pa, zeta);
         console.log('Santiago Sandoval was here')
-        console.log(Mne, Cne, Kne, U1)
+        // console.log(Mne, Cne, Kne, U1)
         Kani = Kne;
         for (let i = 1; i < U1.mat[0].length - 1; i++) {
           t[i] = t[i - 1] + 0.02;
@@ -1434,7 +1434,7 @@
         SensorCheckerA();
         SensorCheckerAG();
         SensorCheckerL();
-        console.log(SensorMultp)
+        // console.log(SensorMultp)
         Fils = UPP1.mat.length;
         Colm = UPP1.mat[0].length;
         FacDRuido = Array.from({ length: Fils }, () => Array(Colm).fill(0))
@@ -1541,7 +1541,7 @@
         factorCrecimiento = Math.pow(W2 / W1, 1 / (totalIterations - 1));
         Wv[0] = W1;
         let frecuenciaActual = 2 * Math.PI * parseFloat(calcularResultado(document.getElementById('W1_box').value)); // Inicializa con la frecuencia inicial
-        console.log(frecuenciaActual)
+        // console.log(frecuenciaActual)
         if (LineaChk == true) {
           for (let santiago = 0; santiago < totalIterations; santiago++) {
             Wv[santiago + 1] = Wv[santiago] + Vel;
@@ -1777,7 +1777,7 @@
           var fila = new Array(m).fill(0);
           matriz.push(fila);
         }
-        console.log(matriz)
+        // console.log(matriz)
         return Matrix.create(matriz);
       }
       function OnesA(n, m) {
@@ -1831,13 +1831,13 @@
       function K_local(PrG, VecOrden) { //Matrices de rigidez total
         with (Matrix) {
           const KIND3 = Array.from({ length: VecOrden.length }, () => [0]); //Array que contiene las matrices de transformación
-          console.log(KIND3)
+          // console.log(KIND3)
           for (let j1 = 0; j1 < VecOrden.length; j1++) { //Construcción de matrices
             for (let i = 0; i < VecOrden[0].length; i++) { //Construcción de matrices
               var PpE = PrG[VecOrden[j1][i]][1].Propiedades; //Guarda las propiedades del elemento
               var Area = PpE.b * PpE.h;
               var Inercia = PpE.b * PpE.h * PpE.h * PpE.h / 12;
-              console.log(Area, Inercia)
+              // console.log(Area, Inercia)
               var KIND = scale(create([[(Area / Inercia), 0, 0, (-1 * Area / Inercia), 0, 0], [0, 12, 6 * 1, 0, -12, 6 * 1], [0, 0, 4, 0, -6, 2], [0, 0, 0, (Area / Inercia), 0, 0], [0, 0, 0, 0, 12, -6], [0, 0, 0, 0, 0, 4]]), (PpE.E * Inercia / (1)));
               var KIND2 = transpose(KIND);
               for (let j = 0; j < KIND.mat.length; j++) { //Borrar diagonal 
@@ -1869,17 +1869,17 @@
 
         }
         KIND3 = K_local(PrG, matrizCombinada);
-        console.log(KIND3)
-        console.log(KIND3[0][1][0]);
+        // console.log(KIND3)
+        // console.log(KIND3[0][1][0]);
         with (Matrix) {
           const KGlobales1 = Array.from({ length: matrizCombinada.length }, () => Array(matrizCombinada[0].length).fill(0)); //Array que contiene las matrices de transformación
           for (let j = 0; j < matrizCombinada.length; j++) { //Construcción de matrices
-            console.log(KIND3[0][j][1])
+            // console.log(KIND3[0][j][1])
             for (let i = 0; i < Betas[0].length; i++) { //Borrar diagonal 
               KGlobales1[j][i] = mult(mult(transpose(Betas[0][i]), KIND3[0][j][i]), Betas[0][i]);
             }
           }
-          console.log(KGlobales1)
+          // console.log(KGlobales1)
           return [KGlobales1];
         }
       }
@@ -1895,9 +1895,9 @@
           }
           KGlobales = K_Globales(PrG);
           let KK1elemt;
-          console.log(KGlobales, KGlobales.length)
+          // console.log(KGlobales, KGlobales.length)
           const KGEnsambladas = Array(KGlobales[0].length).fill(0);
-          console.log(KGEnsambladas)
+          // console.log(KGEnsambladas)
           for (let j1 = 0; j1 < KGlobales[0].length; j1++) { //Construcción de matrices
             if (Porti2P == true) {
               KK1elemt = Array.from({ length: 18 }, () => Array(18).fill(0));
@@ -1922,11 +1922,11 @@
                 }
               }
             }
-            console.log(KK1elemt)
+            // console.log(KK1elemt)
             KGEnsambladas[j1] = KK1elemt;
 
           }
-          console.log(KGEnsambladas)
+          // console.log(KGEnsambladas)
           return KGEnsambladas;
         }
       }
@@ -1940,7 +1940,7 @@
           VectRestr = [3, 12, 18, 5, 8, 14, 17, 20, 23, 6, 15, 21]; //Vector de restricciones, pórtico doblemente empotrado
         }
         let KK1elemt = KAsambler(PrG);
-        console.log(KK1elemt[2])
+        // console.log(KK1elemt[2])
         let KReducidas = Array(KK1elemt.length).fill(0);
         for (let j1 = 0; j1 < KK1elemt.length; j1++) { //Construcción de matrices
           let KGlobalReducida = Array.from({ length: VectRestr.length }, () => Array(VectRestr.length).fill(0));
@@ -1982,10 +1982,10 @@
             }
           }
           KReducidas[j1] = Ki;
-          console.log(KReducidas[j1], j1)
-          console.log(Ki)
+          // console.log(KReducidas[j1], j1)
+          // console.log(Ki)
         }
-        console.log(KReducidas)
+        // console.log(KReducidas)
         return [KReducidas]
       }
       //Función para condensar
@@ -1993,10 +1993,10 @@
         let K_Con;
         with (Matrix) {
           let Ki = Red_Constr(PrG);
-          console.log(Ki, Ki[0].length)
+          // console.log(Ki, Ki[0].length)
           let KCondensadas = Array(Ki[0].length).fill(0);
-          console.log(KCondensadas)
-          console.log(Ki[0][1])
+          // console.log(KCondensadas)
+          // console.log(Ki[0][1])
           for (let j1 = 0; j1 < Ki[0].length; j1++) { //Construcción de matrices 
             if (Porti2P == true) {
               let end = Ki[0][j1].mat.length + 1;
@@ -2004,7 +2004,7 @@
               let Kpo = create(Ki[0][j1].mat.slice(0, 2).map(row => row.slice(2, end)));
               let Kop = transpose(Kpo);
               let Koo = create(Ki[0][j1].mat.slice(2, 7).map(row => row.slice(2, end)));
-              console.log(end, Kpp, Kpo, Kop, Koo)
+              // console.log(end, Kpp, Kpo, Kop, Koo)
               K_Con = sub(Kpp, mult(Kpo, mult(inverse(Koo), Kop)));
               // return [Kpp,Kop,Kpo,Koo];
             } else {
@@ -2017,7 +2017,7 @@
             }
             KCondensadas[j1] = K_Con;
           }
-          console.log(KCondensadas)
+          // console.log(KCondensadas)
           return KCondensadas
         }
       }
@@ -2028,7 +2028,7 @@
           let Masa = Zero(K_Con.mat.length, K_Con.mat.length);
           for (let i = 0; i < Masa.mat.length; i++) { //Construcción matriz de masa
             Masa.mat[i][i] = PrG[i][1].Propiedades.M;
-            console.log(Masa.mat[i][i])
+            // console.log(Masa.mat[i][i])
 
           }
           return [Masa, K_Con]
@@ -2225,7 +2225,7 @@
           // Cne = mult(mult(PHIT, C), PHI);
           Cne = C;
           Kne = mult(mult(PHIT, K), PHI);
-          console.log(Mne, Cne, Kne, w)
+          // console.log(Mne, Cne, Kne, w)
           qno = mult(mult(mult(PHIT, M), inverse(Mne)), uo);
           qnpo = mult(mult(mult(PHIT, M), inverse(Mne)), upo);
           qppo = solve(M, sub(sub(Po, mult(Cne, qnpo)), mult(Kne, qno)));
@@ -2243,7 +2243,7 @@
           // const [Ac_Data, dt2] = Elcentro();
           // const [Ac_Data, dt2] = Seno();
           var Pg1 = new Array();
-          console.log(Ac_Data)
+          // console.log(Ac_Data)
           var Acel = create([Ac_Data]);
           Pg1 = Zero(PHI.mat.length, transpose(Acel).mat.length);
           //2.2
@@ -2299,7 +2299,7 @@
           }
 
           // UP1 = create
-          console.log(U1)
+          // console.log(U1)
           //2.3
           return [q1, qp1, Mne, Cne, Kne, PHI, w, C];
           // return [U1, q1, qp1];
@@ -2477,7 +2477,7 @@
         }
         validador2 = 2;
         dt2 = 1 / 50;
-        console.log(Ac_Data)
+        // console.log(Ac_Data)
         return [Ac_Data, dt2];
       }
       function LaVega() {
@@ -3743,7 +3743,7 @@
               }
             }
 
-            console.log("Al menos un elemento del vector está contenido en la variable.");
+            // console.log("Al menos un elemento del vector está contenido en la variable.");
             XYXY()
             renderer.render(scene, camera);
             return;
@@ -3789,7 +3789,7 @@
         for (let i = 0; i < PrG.length; i++) {
           if (Drag.position == PrG[i][0].position) {
             //Bloquear Slab
-            console.log('Cambio')
+            // console.log('Cambio')
             //Masa 
             var Masa = parseFloat(document.getElementById('Mass_box1').value);
             //Modulo de elásticidad
@@ -3820,7 +3820,7 @@
       }
       // Actualiza las propiedades físicas en la interfaz
       function PropFiAct(Drag, PrG) {
-        console.log('Act')
+        // console.log('Act')
         for (let i = 0; i < PrG.length; i++) {
           if (Drag.position == PrG[i][0].position) {
             let condicionIf = (Porti2P) ? (i == 0 || i == 1) : (i == 0 || i == 1 || i == 2);
@@ -3853,7 +3853,7 @@
               document.getElementById('UnLocke').style.visibility = 'hidden';
               document.getElementById("StartSimulation").setAttribute("disabled", "true");
             }
-            console.log('Cambio')
+            // console.log('Cambio')
             //Masa 
             document.getElementById('Mass_box1').value = parseFloat(PrG[i][1].Propiedades.M);
             //Modulo de elásticidad
@@ -4539,7 +4539,7 @@
         renderer.render(scene, camera);
         Animar = requestAnimationFrame(animate2);
         if (DetenerAnimacion == true) {
-          console.log('Hola')
+          // console.log('Hola')
           cancelAnimationFrame(Animar);
 
         }
@@ -4915,7 +4915,7 @@
         if (CheckLv == false) {
           setTimeout(function () {
             SensorMultp = 0;
-            console.log(SensorMultp)
+            // console.log(SensorMultp)
           }, 250); // 2000 milisegundos = 2 segundos
         }
       }
@@ -4977,7 +4977,7 @@
 
         }
         SensorMultpA = 1;
-        console.log(SensorMultpA)
+        // console.log(SensorMultpA)
         CheckAc = true;
         // toggleOptions(1, CheckAc)
         // toggleOptions(0,true)
