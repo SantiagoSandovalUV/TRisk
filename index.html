@@ -4315,8 +4315,8 @@
             // SX.disabled = false;
             // SY.disabled = false;
             // StarCheck = false;
-            LoadCharData();
             ExportarAnyTiempo();
+            LoadCharData();
             if (Porti2P == true) {
               LimpiarGeo(PrG);
               if (!(CheckLv || CheckAc)) {
@@ -5084,12 +5084,12 @@
                 chart.data.datasets[0].data.push({ y: SensorMultp * U1.mat[0][i] + FacDRuido[0][i], x: t[i] });
                 chart2.data.datasets[0].data.push({ y: SensorMultp * U1.mat[1][i] + FacDRuido[1][i], x: t[i] });
                 // chart3.data.datasets[0].data.push({ y: SensorMultp * U1.mat[2][i], x: t[i] });
-                chart3.data.datasets[0].data.push({ y: Desp_Data[i], x: t[i] });
+                chart3.data.datasets[0].data.push({ y: Desp_DataC[i], x: t[i] });
               } else {
                 chart.data.datasets[0].data.push({ y: SensorMultpA * UPP1.mat[0][i] + FacDRuidoA[0][i], x: t[i] });
                 chart2.data.datasets[0].data.push({ y: SensorMultpA * UPP1.mat[1][i] + FacDRuidoA[1][i], x: t[i] });
                 // chart3.data.datasets[0].data.push({ y: SensorMultpA * UPP1.mat[2][i], x: t[i] });
-                chart3.data.datasets[0].data.push({ y: SensorMultpAG * Ac_Data[i] + FacDRuidoAG[0][i], x: t[i] });
+                chart3.data.datasets[0].data.push({ y: SensorMultpAG * Ac_DataC[i] + FacDRuidoAG[0][i], x: t[i] });
               }
 
             }
@@ -5107,12 +5107,12 @@
                 chart.data.datasets[0].data.push({ y: SensorMultp * U1.mat[3][i] + FacDRuido[3][i], x: t[i] });
                 chart2.data.datasets[0].data.push({ y: SensorMultp * U1.mat[4][i] + FacDRuido[4][i], x: t[i] });
                 // chart3.data.datasets[0].data.push({ y: SensorMultp * U1.mat[5][i], x: t[i] });
-                chart3.data.datasets[0].data.push({ y: Desp_Data[i], x: t[i] });
+                chart3.data.datasets[0].data.push({ y: Desp_DataC[i], x: t[i] });
               } else {
                 chart.data.datasets[0].data.push({ y: SensorMultpA * UPP1.mat[3][i] + FacDRuidoA[3][i], x: t[i] });
                 chart2.data.datasets[0].data.push({ y: SensorMultpA * UPP1.mat[4][i] + FacDRuidoA[4][i], x: t[i] });
                 // chart3.data.datasets[0].data.push({ y: SensorMultpA * UPP1.mat[5][i], x: t[i] });
-                chart3.data.datasets[0].data.push({ y: SensorMultpAG * Ac_Data[i] + FacDRuidoAG[0][i], x: t[i] });
+                chart3.data.datasets[0].data.push({ y: SensorMultpAG * Ac_DataC[i] + FacDRuidoAG[0][i], x: t[i] });
               }
             }
             break;
@@ -5129,12 +5129,12 @@
                 chart.data.datasets[0].data.push({ y: SensorMultp * U1.mat[6][i] + FacDRuido[6][i], x: t[i] });
                 chart2.data.datasets[0].data.push({ y: SensorMultp * U1.mat[7][i] + FacDRuido[7][i], x: t[i] });
                 // chart3.data.datasets[0].data.push({ y: SensorMultp * U1.mat[8][i], x: t[i] });
-                chart3.data.datasets[0].data.push({ y: Desp_Data[i], x: t[i] });
+                chart3.data.datasets[0].data.push({ y: Desp_DataC[i], x: t[i] });
               } else {
                 chart.data.datasets[0].data.push({ y: SensorMultpA * UPP1.mat[6][i] + FacDRuidoA[6][i], x: t[i] });
                 chart2.data.datasets[0].data.push({ y: SensorMultpA * UPP1.mat[7][i] + FacDRuidoA[7][i], x: t[i] });
                 // chart3.data.datasets[0].data.push({ y: SensorMultpA * UPP1.mat[8][i], x: t[i] });
-                chart3.data.datasets[0].data.push({ y: SensorMultpAG * Ac_Data[i] + FacDRuidoAG[0][i], x: t[i] });
+                chart3.data.datasets[0].data.push({ y: SensorMultpAG * Ac_DataC[i] + FacDRuidoAG[0][i], x: t[i] });
 
               }
             }
